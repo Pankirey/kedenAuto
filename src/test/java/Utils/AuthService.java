@@ -15,6 +15,6 @@ public class AuthService {
                 .setPassword(password)
                 .loginClick();
 
-        $(byXpath("//span[text()='Перейти в систему']")).shouldBe(visible);
+        $(byXpath("//span[text()='Войти']")).shouldBe(visible);
     }
 }

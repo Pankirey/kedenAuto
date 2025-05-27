@@ -1,15 +1,16 @@
 import Pages.MainPageAuthorized;
-import Utils.AuthApi;
-import Utils.AuthHelper;
+import Utils.AuthService;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.open;
 
 public class MainPageAuthorizedTest {
+
+    AuthService auth = new AuthService();
+
     @Test
     void openAuthorizedMainPageAndClickSystemButton(){
-        String token = AuthApi.getToken("testkeden2@proton.me","Qwerty123$");
-        AuthHelper.authorizeWithToken(token);
+        auth.loginAs("testkeden2@proton.me","Qwerty123$");
 
         open("https://test-keden.codecraft.kz/");
         MainPageAuthorized mainPageAuthorized = new MainPageAuthorized();
