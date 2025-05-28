@@ -1,4 +1,5 @@
 import Pages.GuarantyApplication;
+import Pages.GuarantyApplicationForPledgeAgreement;
 import Pages.GuarantyJournal;
 import Utils.AuthService;
 import com.codeborne.selenide.Selenide;
@@ -26,6 +27,18 @@ public class GuarantyJournalTest {
         GuarantyApplication guarantyApplication = new GuarantyApplication();
         guarantyApplication.shouldHaveSuccessNotification("Заявление на регистрацию обеспечения успешно создано");
 
+    }
+
+    @Test
+    void successfulCreatingGuarantyApplicationForPledgeAgreement(){
+        auth.loginAs("testkeden2@proton.me","Qwerty123$");
+        GuarantyJournal guarantyJournal = new GuarantyJournal();
+        guarantyJournal.openGuarantyJournal()
+                .createGuarantyButtonClick()
+                .createGuarantyApplicationForPledgeAgreement();
+
+        GuarantyApplicationForPledgeAgreement guarantyApplicationForPledgeAgreement = new GuarantyApplicationForPledgeAgreement();
+        guarantyApplicationForPledgeAgreement.shouldHaveSuccessNotification("Заявление на заключение договора залога успешно создано");
     }
 
 }

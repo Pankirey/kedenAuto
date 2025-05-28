@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class GuarantyJournal {
     private final SelenideElement createGuarantyButton = $(byXpath("//div[text()='Создать']")),
     createGuarantyRegistrationApplicationOption = $(byXpath("//span[text()='На регистрацию обеспечения']")),
-    createGuarantyPledgeAgreementOption = $(byXpath("//span[text()='На регистрацию обеспечения']"));
+    createGuarantyPledgeAgreementOption = $(byXpath("//span[text()='На заключение договора залога']"));
 
 
     public GuarantyJournal openGuarantyJournal(){
@@ -24,4 +24,11 @@ public class GuarantyJournal {
         createGuarantyRegistrationApplicationOption.click();
         return new GuarantyRegistrationApplication();
     }
+
+    public GuarantyApplicationForPledgeAgreement createGuarantyApplicationForPledgeAgreement(){
+        createGuarantyPledgeAgreementOption.click();
+        return new GuarantyApplicationForPledgeAgreement();
+    }
+
+
 }
