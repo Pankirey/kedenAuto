@@ -41,4 +41,6 @@ public class GuarantyJournalTest {
         guarantyApplicationForPledgeAgreement.shouldHaveSuccessNotification("Заявление на заключение договора залога успешно создано");
     }
 
+
+
 }

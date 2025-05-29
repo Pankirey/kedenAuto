@@ -20,9 +20,9 @@ public class GuarantyJournal {
         return this;
     }
 
-    public GuarantyRegistrationApplication createGuarantyRegistrationApplication(){
+    public GuarantyApplication createGuarantyRegistrationApplication(){
         createGuarantyRegistrationApplicationOption.click();
-        return new GuarantyRegistrationApplication();
+        return new GuarantyApplication();
     }
 
     public GuarantyApplicationForPledgeAgreement createGuarantyApplicationForPledgeAgreement(){
