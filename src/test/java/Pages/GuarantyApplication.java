@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class GuarantyApplication {
     private final SelenideElement payerTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-payer']")),
-    declarantTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-declarant']")),
+    declarantTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Декларант в ТД']")),
     representedPersonTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-representedPerson']")),
     applicationCommonInfoTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-applicationCommonInfo']")),
     contractsTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-contracts']")),
@@ -38,6 +38,11 @@ public class GuarantyApplication {
 
     public GuarantyApplication fillPayerButtonClick(){
         fillPayerButton.shouldBe(Condition.visible).click();
+        return this;
+    }
+
+    public GuarantyApplication clickDeclarantTab(){
+        declarantTab.shouldBe(visible).click();
         return this;
     }
 
