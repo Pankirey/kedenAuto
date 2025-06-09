@@ -9,9 +9,10 @@ import org.junit.jupiter.api.Test;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.back;
 import static java.nio.channels.Selector.open;
 
-public class GuarantyJournalTest {
+public class GuarantyJournalTest extends TestBase{
 
     AuthService auth = new AuthService();
 
@@ -29,6 +30,7 @@ public class GuarantyJournalTest {
 
     }
 
+
     @Test
     void successfulCreatingGuarantyApplicationForPledgeAgreement(){
         auth.loginAs("testkeden2@proton.me","Qwerty123$");
@@ -40,7 +42,5 @@ public class GuarantyJournalTest {
         GuarantyApplicationForPledgeAgreement guarantyApplicationForPledgeAgreement = new GuarantyApplicationForPledgeAgreement();
         guarantyApplicationForPledgeAgreement.shouldHaveSuccessNotification("Заявление на заключение договора залога успешно создано");
     }
-
-
 
 }
