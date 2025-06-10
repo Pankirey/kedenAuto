@@ -13,6 +13,9 @@ public class GuarantyApplicationTest extends TestBase{
     public void successfulGuarantyApplicationSendForRegistration(){
         auth.loginAs("testkeden2@proton.me","Qwerty123$");
         GuarantyApplication guarantyApplication = new GuarantyApplication();
-        guarantyApplication.createGuarantyApplication().fillPayerButtonClick();
+        guarantyApplication.createGuarantyApplication()
+                .fillPayerButtonClick()
+                .fillPayerFromAccountClick();
+        Selenide.sleep(5000);
     }
 }

@@ -1,9 +1,12 @@
 package Pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -20,7 +23,15 @@ public class GuarantyApplication {
     methodsTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-methods']")),
     notificationMessage = $(".ant-notification-notice-message"),
     header = $(byXpath("//span[text()='Заявление на регистрацию обеспечения']")),
-    fillPayerButton = $(byXpath("//button[@class='ant-btn css-gjh7v8 ant-btn-primary ant-btn-background-ghost']"));
+    fillPayerButton = $(byXpath("//button[@class='ant-btn css-gjh7v8 ant-btn-primary ant-btn-background-ghost']")),
+    fillPayerFromAccount = $(byXpath("//span[text()='Заполнить из личного профиля']")),
+    addAddressButton = $(byXpath("//span[text()='Добавить адрес']")),
+    fillAddressButton = $(byXpath("//article[text()='Адрес ']/ancestor::div[@class='df ai-c']/following-sibling::button")),
+    typeOfAddressField = $(byXpath("//span[@class='ant-select-selection-item']")),
+    actualAddressOption = $(byXpath("//div[text()='2 - Фактический адрес']")),
+    countryField = $("#country"),
+    countryOption1 = $(byXpath("//div[text()='AD Княжество Андорра']")),
+    saveAddressButton = $(byXpath("//div[text()='Добавить адрес']/parent::div/following-sibling::div[@class='ant-modal-footer']//button[@form='addressForm']"));
 
     public void shouldHaveSuccessNotification(String expectedText){
         notificationMessage
@@ -41,8 +52,30 @@ public class GuarantyApplication {
         return this;
     }
 
+    public GuarantyApplication fillPayerFromAccountClick(){
+        fillPayerFromAccount.shouldBe(visible).click();
+        addAddressButton.shouldBe(visible).click();
+        fillAddressButton.shouldBe(visible).click();
+        typeOfAddressField.shouldBe(visible).click();
+        actualAddressOption.click();
+        countryField.click();
+        countryOption1.click();
+        saveAddressButton.shouldBe(visible).click();
+        return this;
+    }
+
     public GuarantyApplication clickDeclarantTab(){
         declarantTab.shouldBe(visible).click();
+        return this;
+    }
+
+    public GuarantyApplication addActualAddressButton(){
+        addAddressButton.shouldBe(visible).click();
+        return this;
+    }
+
+    public GuarantyApplication fillAddressButtonClick(){
+        fillAddressButton.shouldBe(visible).click();
         return this;
     }
 
