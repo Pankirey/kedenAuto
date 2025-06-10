@@ -17,7 +17,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class GuarantyApplication {
     private final SelenideElement payerTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-payer']")),
     declarantTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Декларант в ТД']")),
-    representedPersonTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-representedPerson']")),
+    representedPersonTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Представлен в лице']")),
     applicationCommonInfoTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-applicationCommonInfo']")),
     contractsTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-contracts']")),
     methodsTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-methods']")),
@@ -31,7 +31,20 @@ public class GuarantyApplication {
     actualAddressOption = $(byXpath("//div[text()='2 - Фактический адрес']")),
     countryField = $("#country"),
     countryOption1 = $(byXpath("//div[text()='AD Княжество Андорра']")),
-    saveAddressButton = $(byXpath("//div[text()='Добавить адрес']/parent::div/following-sibling::div[@class='ant-modal-footer']//button[@form='addressForm']"));
+    saveAddressButton = $(byXpath("//div[text()='Добавить адрес']/parent::div/following-sibling::div[@class='ant-modal-footer']//button[@form='addressForm']")),
+    addContactButton = $(byXpath("//span[text()='Добавить контакт']")),
+    typeOfContactForEmail = $("#contacts_0_communicationRemedy"),
+    typeOfContactForPhone = $("#contacts_1_communicationRemedy"),
+    emailContactOption = $(byXpath("//div[@title='Электронная почта']")),
+    phoneContactOption = $(byXpath("(//div[@title='Телефон'])[2]")),
+    emailField = $("#contacts_0_communicationIdentifier"),
+    phoneField = $("#contacts_1_communicationIdentifier"),
+    savePayerButton = $(byXpath("//div[text()='Добавить контрагента']/parent::div/following-sibling::div[@class='ant-modal-footer']//button[@form='addressForm']")),
+    savePayerTabButton = $(byXpath("//button/span[text()='Сохранить']")),
+    declarantFlagPayerMatch = $(byXpath("//span[text()='Признак совпадения с Плательщиком']")),
+    fillDeclarantLikePayerConfirm = $(byXpath("//div[text()='Вы хотите скопировать данные из Плательщика?']/parent::div/parent::div/following-sibling::div/button/span[text()='Да']")),
+    saveDeclarantTabButton = $(byXpath("//button/span[text()='Сохранить']"));
+
 
     public void shouldHaveSuccessNotification(String expectedText){
         notificationMessage
@@ -47,12 +60,9 @@ public class GuarantyApplication {
         return this;
     }
 
-    public GuarantyApplication fillPayerButtonClick(){
-        fillPayerButton.shouldBe(Condition.visible).click();
-        return this;
-    }
 
-    public GuarantyApplication fillPayerFromAccountClick(){
+    public GuarantyApplication fillPayerAndSave(){
+        fillPayerButton.shouldBe(visible).click();
         fillPayerFromAccount.shouldBe(visible).click();
         addAddressButton.shouldBe(visible).click();
         fillAddressButton.shouldBe(visible).click();
@@ -61,21 +71,29 @@ public class GuarantyApplication {
         countryField.click();
         countryOption1.click();
         saveAddressButton.shouldBe(visible).click();
+        addContactButton.shouldBe(visible).click();
+        typeOfContactForEmail.shouldBe(visible).click();
+        emailContactOption.shouldBe(visible).click();
+        emailField.setValue("asdfqwer@gmail.com");
+        addContactButton.click();
+        typeOfContactForPhone.shouldBe(visible).click();
+        phoneContactOption.shouldBe(visible).click();
+        phoneField.setValue("+77788482570");
+        savePayerButton.click();
+        savePayerTabButton.click();
         return this;
     }
 
-    public GuarantyApplication clickDeclarantTab(){
+    public GuarantyApplication fillDeclarant(){
         declarantTab.shouldBe(visible).click();
+        declarantFlagPayerMatch.shouldBe(visible).click();
+        fillDeclarantLikePayerConfirm.click();
+        saveDeclarantTabButton.click();
         return this;
     }
 
-    public GuarantyApplication addActualAddressButton(){
-        addAddressButton.shouldBe(visible).click();
-        return this;
-    }
-
-    public GuarantyApplication fillAddressButtonClick(){
-        fillAddressButton.shouldBe(visible).click();
+    public GuarantyApplication fillRepresentedPerson(){
+        representedPersonTab.click();
         return this;
     }
 
