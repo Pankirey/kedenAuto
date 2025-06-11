@@ -18,7 +18,7 @@ public class GuarantyApplication {
     private final SelenideElement payerTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-payer']")),
     declarantTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Декларант в ТД']")),
     representedPersonTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Представлен в лице']")),
-    applicationCommonInfoTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-applicationCommonInfo']")),
+    applicationCommonInfoTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Общие данные заявления']")),
     contractsTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-contracts']")),
     methodsTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-methods']")),
     notificationMessage = $(".ant-notification-notice-message"),
@@ -43,7 +43,14 @@ public class GuarantyApplication {
     savePayerTabButton = $(byXpath("//button/span[text()='Сохранить']")),
     declarantFlagPayerMatch = $(byXpath("//span[text()='Признак совпадения с Плательщиком']")),
     fillDeclarantLikePayerConfirm = $(byXpath("//div[text()='Вы хотите скопировать данные из Плательщика?']/parent::div/parent::div/following-sibling::div/button/span[text()='Да']")),
-    saveDeclarantTabButton = $(byXpath("//button/span[text()='Сохранить']"));
+    saveDeclarantTabButton = $(byXpath("//button/span[text()='Сохранить']")),
+    phoneOfRepresentedPerson = $("#contacts_1_communicationIdentifier"),
+    checkDocumentInGBDFLButton = $(byXpath("//span[text()='Проверить документ в ГБД ФЛ']")),
+    documentFromGBDFLInfo = $(byXpath("//div[@class='df ai-c fw-w']")),
+    saveRepresentedPersonTabButton = $(byXpath("//button[@type='submit']//span[text()='Сохранить']")),
+    guarantyTypeField = $("#guaranty_guarantyType"),
+    enforcementOfDutyOption = $(byXpath("//div[@class='ant-select-item-option-content' and text()='Обеспечение исполнения обязанности']")),
+    guarantyRequiredSum = $("#guarantyInfo_requiredSum");
 
 
     public void shouldHaveSuccessNotification(String expectedText){
@@ -94,6 +101,18 @@ public class GuarantyApplication {
 
     public GuarantyApplication fillRepresentedPerson(){
         representedPersonTab.click();
+        phoneOfRepresentedPerson.sendKeys("+77088780570");
+        checkDocumentInGBDFLButton.click();
+        documentFromGBDFLInfo.shouldBe(visible);
+        saveRepresentedPersonTabButton.click();
+        return this;
+    }
+
+    public GuarantyApplication fillApplicationCommonInfo(){
+        applicationCommonInfoTab.click();
+        guarantyTypeField.click();
+        enforcementOfDutyOption.shouldBe(visible).click();
+        guarantyRequiredSum.setValue("50000");
         return this;
     }
 
