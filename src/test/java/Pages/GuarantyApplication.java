@@ -10,6 +10,7 @@ import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selectors.by;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -50,7 +51,23 @@ public class GuarantyApplication {
     saveRepresentedPersonTabButton = $(byXpath("//button[@type='submit']//span[text()='Сохранить']")),
     guarantyTypeField = $("#guaranty_guarantyType"),
     enforcementOfDutyOption = $(byXpath("//div[@class='ant-select-item-option-content' and text()='Обеспечение исполнения обязанности']")),
-    guarantyRequiredSum = $("#guarantyInfo_requiredSum");
+    guarantyRequiredSum = $("#guarantyInfo_requiredSum"),
+    guarantyCaseField = $("#guaranty_guarantyCase"),
+    customsTransitOption = $(byXpath("//div[@title = 'Таможенный транзит']")),
+    customsRegistrationAuthority = $("#guaranty_customs"),
+    zhetysuAuthority = $(byXpath("//div[@title = '55301 ТАМОЖЕННЫЙ ПОСТ «ЖЕТЫСУ»']")),
+    departureCustomsField = $("#guaranty_departureCustoms"),
+    zhetysuAuthorityRegistration = $(byXpath("//div[@title = '39855301 ТАМОЖЕННЫЙ ПОСТ «ЖЕТЫСУ»']")),
+    gurantyDestinationCustomsField=$("#guaranty_destinationCustoms"),
+    saintPetersburgCustomPost = $(byXpath("//div[@title = '12402000 ЭКС ЦЭКТУ г. Санкт-Петербург']")),
+    addCountryButton = $(byXpath("//button/span[text()='Добавить страну']")),
+    departureCountryField = $("#departureCountry"),
+    addRussiaOption = $(byXpath("//div[@title = 'RU Российская Федерация']")),
+    addDocumentOfApplicationInfoButton = $(byXpath("//button/span[text()='Добавить документ']")),
+    documentTypeField = $("#documentType"),
+    copyNameOfDocumentCheckBox = $(byXpath("//span[text()='Скопировать с графы \"Вид документа\"']")),
+    docNumberField = $("#docNumber"),
+    docDateField = $("#docDate");
 
 
     public void shouldHaveSuccessNotification(String expectedText){
@@ -113,6 +130,25 @@ public class GuarantyApplication {
         guarantyTypeField.click();
         enforcementOfDutyOption.shouldBe(visible).click();
         guarantyRequiredSum.setValue("50000");
+        guarantyCaseField.click();
+        customsTransitOption.click();
+        customsRegistrationAuthority.setValue("55301");
+        zhetysuAuthority.click();
+        departureCustomsField.setValue("55301");
+        zhetysuAuthorityRegistration.click();
+        gurantyDestinationCustomsField.setValue("1240200");
+        saintPetersburgCustomPost.click();
+        addCountryButton.click();
+        departureCountryField.setValue("RU");
+        addRussiaOption.shouldBe(visible).click();
+        addDocumentOfApplicationInfoButton.click();
+        documentTypeField.click();
+        documentTypeField.sendKeys(Keys.ENTER);
+        copyNameOfDocumentCheckBox.click();
+        docNumberField.setValue("Номер документа");
+        docDateField.setValue("13.06.2025");
+
+
         return this;
     }
 
