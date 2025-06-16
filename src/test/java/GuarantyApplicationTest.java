@@ -10,14 +10,15 @@ public class GuarantyApplicationTest extends TestBase{
     AuthService auth = new AuthService();
 
     @Test
-     public void successfulGuarantyApplicationSendForRegistration(){
+      public void successfulGuarantyApplicationSendForRegistration(){
         auth.loginAs("testkeden2@proton.me","Qwerty123$");
         GuarantyApplication guarantyApplication = new GuarantyApplication();
         guarantyApplication.createGuarantyApplication()
                 .fillPayerAndSave()
                 .fillDeclarant()
                 .fillRepresentedPerson()
-                .fillApplicationCommonInfo();
+                .fillApplicationCommonInfo()
+                .fillMoneyDepositPaymentMethod();
         Selenide.sleep(5000);
     }
 }

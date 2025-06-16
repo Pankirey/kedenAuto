@@ -1,5 +1,7 @@
 package Pages;
 
+import Pages.Components.CalendarComponent;
+import Pages.Components.DocumentUploader;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
@@ -16,12 +18,15 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class GuarantyApplication {
+
+    CalendarComponent calendarComponent = new CalendarComponent();
+    DocumentUploader documentUploader = new DocumentUploader();
     private final SelenideElement payerTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-payer']")),
     declarantTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Декларант в ТД']")),
     representedPersonTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Представлен в лице']")),
     applicationCommonInfoTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Общие данные заявления']")),
     contractsTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-contracts']")),
-    methodsTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-methods']")),
+    methodsTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Иные способы обеспечения']")),
     notificationMessage = $(".ant-notification-notice-message"),
     header = $(byXpath("//span[text()='Заявление на регистрацию обеспечения']")),
     fillPayerButton = $(byXpath("//button[@class='ant-btn css-gjh7v8 ant-btn-primary ant-btn-background-ghost']")),
@@ -67,7 +72,22 @@ public class GuarantyApplication {
     documentTypeField = $("#documentType"),
     copyNameOfDocumentCheckBox = $(byXpath("//span[text()='Скопировать с графы \"Вид документа\"']")),
     docNumberField = $("#docNumber"),
-    docDateField = $("#docDate");
+    docDateField = $("#docDate"),
+    saveDocumentButton = $(byXpath("//div[@class='ant-space-item']/button/span[text()='Сохранить']")),
+    saveApplicationCommonInfoTab = $(byXpath("//div[@id='applicationCommonInfo']/main/button")),
+    createPaymentMethodButton = $(byXpath("//h5/following-sibling::button")),
+    moneyPaymentMethodOption = $(byXpath("//li[@role='menuitem']/span[text()='Деньгами']")),
+    moneyPaymentOptionType = $("#paymentOptionType"),
+    moneyDepositDocNumberField = $("#moneyDeposit_docNumber"),
+    moneyDepositDocDateField= $("#moneyDeposit_docDate"),
+    moneyDepositBikField = $("#moneyDeposit_bik"),
+    moneyDepositIikField = $("#moneyDeposit_iik"),
+    nonSuretyContractOption = $(byXpath("//span[@class='ant-radio ant-wave-target']/following-sibling::span[text()='Нет']")),
+    suretyContractOption = $(byXpath("//span[@class='ant-radio ant-wave-target']/following-sibling::span[text()='Да']")),
+    sumOfPaymentMethod = $("#sum"),
+    startDateOfPaymentMethod = $(byXpath("//article[text()='Действует с']/parent::label/parent::div/following-sibling::div")),
+    endDateOfPaymentMethod = $(byXpath("//article[text()='Действует по']/parent::label/parent::div/following-sibling::div")),
+    addPaymentMethodButton = $(byXpath("//button/span[text()='Добавить']"));
 
 
     public void shouldHaveSuccessNotification(String expectedText){
@@ -146,9 +166,33 @@ public class GuarantyApplication {
         documentTypeField.sendKeys(Keys.ENTER);
         copyNameOfDocumentCheckBox.click();
         docNumberField.setValue("Номер документа");
-        docDateField.setValue("13.06.2025");
+        docDateField.click();
+        calendarComponent.setDate("16","07","2025");
+        documentUploader.upload("doc.jpg");
+        saveDocumentButton.click();
+        saveApplicationCommonInfoTab.scrollIntoView(true).click();
+        return this;
+    }
 
-
+    public GuarantyApplication fillMoneyDepositPaymentMethod(){
+        methodsTab.click();
+        createPaymentMethodButton.click();
+        moneyPaymentMethodOption.click();
+        moneyPaymentOptionType.click();
+        moneyPaymentOptionType.sendKeys(Keys.ENTER);
+        moneyDepositDocNumberField.setValue("2314");
+        moneyDepositDocDateField.click();
+        calendarComponent.setDate("16","06","2025");
+        moneyDepositBikField.setValue("87654321");
+        moneyDepositIikField.setValue("12345678900987654321");
+        nonSuretyContractOption.click();
+        sumOfPaymentMethod.setValue("50000");
+        startDateOfPaymentMethod.click();
+        calendarComponent.setDate("16","07","2025");
+        endDateOfPaymentMethod.click();
+        calendarComponent.setDate("16","12","2025");
+        documentUploader.upload("doc.jpg");
+        addPaymentMethodButton.click();
         return this;
     }
 
