@@ -2,6 +2,7 @@ package Pages;
 
 import Pages.Components.CalendarComponent;
 import Pages.Components.DocumentUploader;
+import Pages.sections.GuarantyPayerSection;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
@@ -21,6 +22,8 @@ public class GuarantyApplication {
 
     CalendarComponent calendarComponent = new CalendarComponent();
     DocumentUploader documentUploader = new DocumentUploader();
+
+    public GuarantyPayerSection payer = new GuarantyPayerSection();
     private final SelenideElement payerTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-payer']")),
     declarantTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Декларант в ТД']")),
     representedPersonTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Представлен в лице']")),
@@ -29,24 +32,6 @@ public class GuarantyApplication {
     methodsTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Иные способы обеспечения']")),
     notificationMessage = $(".ant-notification-notice-message"),
     header = $(byXpath("//span[text()='Заявление на регистрацию обеспечения']")),
-    fillPayerButton = $(byXpath("//button[@class='ant-btn css-gjh7v8 ant-btn-primary ant-btn-background-ghost']")),
-    fillPayerFromAccount = $(byXpath("//span[text()='Заполнить из личного профиля']")),
-    addAddressButton = $(byXpath("//span[text()='Добавить адрес']")),
-    fillAddressButton = $(byXpath("//article[text()='Адрес ']/ancestor::div[@class='df ai-c']/following-sibling::button")),
-    typeOfAddressField = $(byXpath("//span[@class='ant-select-selection-item']")),
-    actualAddressOption = $(byXpath("//div[text()='2 - Фактический адрес']")),
-    countryField = $("#country"),
-    countryOption1 = $(byXpath("//div[text()='AD Княжество Андорра']")),
-    saveAddressButton = $(byXpath("//div[text()='Добавить адрес']/parent::div/following-sibling::div[@class='ant-modal-footer']//button[@form='addressForm']")),
-    addContactButton = $(byXpath("//span[text()='Добавить контакт']")),
-    typeOfContactForEmail = $("#contacts_0_communicationRemedy"),
-    typeOfContactForPhone = $("#contacts_1_communicationRemedy"),
-    emailContactOption = $(byXpath("//div[@title='Электронная почта']")),
-    phoneContactOption = $(byXpath("(//div[@title='Телефон'])[2]")),
-    emailField = $("#contacts_0_communicationIdentifier"),
-    phoneField = $("#contacts_1_communicationIdentifier"),
-    savePayerButton = $(byXpath("//div[text()='Добавить контрагента']/parent::div/following-sibling::div[@class='ant-modal-footer']//button[@form='addressForm']")),
-    savePayerTabButton = $(byXpath("//button/span[text()='Сохранить']")),
     declarantFlagPayerMatch = $(byXpath("//span[text()='Признак совпадения с Плательщиком']")),
     fillDeclarantLikePayerConfirm = $(byXpath("//div[text()='Вы хотите скопировать данные из Плательщика?']/parent::div/parent::div/following-sibling::div/button/span[text()='Да']")),
     saveDeclarantTabButton = $(byXpath("//button/span[text()='Сохранить']")),
@@ -93,8 +78,8 @@ public class GuarantyApplication {
     checkApplicationResultButton = $(byXpath("//div[@class='ant-space-item']/button/span[text()='Результат проверок']")),
     closeApplicationResultButton = $(byXpath("//div[@class='ant-modal-content']/button")),
     signSendButton = $(byXpath("//div[@class='ant-space-item']/button/span[text()='Подписать и отправить']")),
-    firstCheckboxBeforeSign = $(byXpath("(//input[@class='ant-checkbox-input'])[1]")),
-    secondCheckboxBeforeSign = $(byXpath("(//input[@class='ant-checkbox-input'])[2]")),
+    firstCheckboxBeforeSign = $(byXpath("(//span[contains(@class,'ant-checkbox ant-wave-target ')])[1]")),
+    secondCheckboxBeforeSign = $(byXpath("(//span[contains(@class,'ant-checkbox ant-wave-target ')])[2]")),
     continueToSignButton = $(byXpath("//button/span[text()='Продолжить']"));
 
 
@@ -112,29 +97,16 @@ public class GuarantyApplication {
         return this;
     }
 
-
-    public GuarantyApplication fillPayerAndSave(){
-        fillPayerButton.shouldBe(visible).click();
-        fillPayerFromAccount.shouldBe(visible).click();
-        addAddressButton.shouldBe(visible).click();
-        fillAddressButton.shouldBe(visible).click();
-        typeOfAddressField.shouldBe(visible).click();
-        actualAddressOption.click();
-        countryField.click();
-        countryOption1.click();
-        saveAddressButton.shouldBe(visible).click();
-        addContactButton.shouldBe(visible).click();
-        typeOfContactForEmail.shouldBe(visible).click();
-        emailContactOption.shouldBe(visible).click();
-        emailField.setValue("asdfqwer@gmail.com");
-        addContactButton.click();
-        typeOfContactForPhone.shouldBe(visible).click();
-        phoneContactOption.shouldBe(visible).click();
-        phoneField.setValue("+77788482570");
-        savePayerButton.click();
-        savePayerTabButton.click();
+    public GuarantyApplication fillAll(){
+        payer.fillByAccount();
+        fillDeclarant();
+        fillRepresentedPerson();
+        fillApplicationCommonInfo();
+        fillMoneyDepositPaymentMethod();
         return this;
     }
+
+
 
     public GuarantyApplication fillDeclarant(){
         declarantTab.shouldBe(visible).click();
@@ -209,8 +181,8 @@ public class GuarantyApplication {
         checkApplicationResultButton.click();
         closeApplicationResultButton.click();
         signSendButton.click();
-        firstCheckboxBeforeSign.click();
-        secondCheckboxBeforeSign.click();
+        firstCheckboxBeforeSign.shouldBe(visible).click();
+        secondCheckboxBeforeSign.scrollIntoView(true).shouldBe(visible).click();
         continueToSignButton.click();
         return this;
     }
