@@ -87,7 +87,15 @@ public class GuarantyApplication {
     sumOfPaymentMethod = $("#sum"),
     startDateOfPaymentMethod = $(byXpath("//article[text()='Действует с']/parent::label/parent::div/following-sibling::div")),
     endDateOfPaymentMethod = $(byXpath("//article[text()='Действует по']/parent::label/parent::div/following-sibling::div")),
-    addPaymentMethodButton = $(byXpath("//button/span[text()='Добавить']"));
+    addPaymentMethodButton = $(byXpath("//button/span[text()='Добавить']")),
+    refusalReasonsButton = $(byXpath("//div[@class='ant-space-item']/button/span[text()='Причины отказа']")),
+    checkApplicationButton = $(byXpath("//div[@class='ant-space-item']/button/span[text()='Проверить данные']")),
+    checkApplicationResultButton = $(byXpath("//div[@class='ant-space-item']/button/span[text()='Результат проверок']")),
+    closeApplicationResultButton = $(byXpath("//div[@class='ant-modal-content']/button")),
+    signSendButton = $(byXpath("//div[@class='ant-space-item']/button/span[text()='Подписать и отправить']")),
+    firstCheckboxBeforeSign = $(byXpath("(//input[@class='ant-checkbox-input'])[1]")),
+    secondCheckboxBeforeSign = $(byXpath("(//input[@class='ant-checkbox-input'])[2]")),
+    continueToSignButton = $(byXpath("//button/span[text()='Продолжить']"));
 
 
     public void shouldHaveSuccessNotification(String expectedText){
@@ -193,6 +201,17 @@ public class GuarantyApplication {
         calendarComponent.setDate("16","12","2025");
         documentUploader.upload("doc.jpg");
         addPaymentMethodButton.click();
+        return this;
+    }
+
+    public GuarantyApplication checkSignSend(){
+        checkApplicationButton.scrollIntoView(true).click();
+        checkApplicationResultButton.click();
+        closeApplicationResultButton.click();
+        signSendButton.click();
+        firstCheckboxBeforeSign.click();
+        secondCheckboxBeforeSign.click();
+        continueToSignButton.click();
         return this;
     }
 

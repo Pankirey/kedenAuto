@@ -18,7 +18,8 @@ public class GuarantyApplicationTest extends TestBase{
                 .fillDeclarant()
                 .fillRepresentedPerson()
                 .fillApplicationCommonInfo()
-                .fillMoneyDepositPaymentMethod();
+                .fillMoneyDepositPaymentMethod()
+                .checkSignSend();
         Selenide.sleep(5000);
     }
 }
