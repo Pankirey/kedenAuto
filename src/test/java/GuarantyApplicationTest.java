@@ -16,6 +16,5 @@ public class GuarantyApplicationTest extends TestBase{
         guarantyApplication.createGuarantyApplication()
                 .fillAll()
                 .checkSignSend();
-        Selenide.sleep(9000);
     }
 }

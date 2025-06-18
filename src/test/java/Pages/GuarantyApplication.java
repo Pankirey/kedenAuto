@@ -2,18 +2,12 @@ package Pages;
 
 import Pages.Components.CalendarComponent;
 import Pages.Components.DocumentUploader;
-import Pages.sections.GuarantyPayerSection;
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
+import Pages.sections.*;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.by;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -22,57 +16,17 @@ public class GuarantyApplication {
 
     CalendarComponent calendarComponent = new CalendarComponent();
     DocumentUploader documentUploader = new DocumentUploader();
-
     public GuarantyPayerSection payer = new GuarantyPayerSection();
+    public GuarantyDeclarantSection declarant = new GuarantyDeclarantSection();
+    public GuarantyRepresentedPersonSection representedPerson = new GuarantyRepresentedPersonSection();
+    public GuarantyApplicationCommonInfoSection guarantyApplicationCommonInfoSection = new GuarantyApplicationCommonInfoSection();
+    public GuarantyPaymentMethodsSection guarantyPaymentMethodsSection = new GuarantyPaymentMethodsSection();
     private final SelenideElement payerTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-payer']")),
-    declarantTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Декларант в ТД']")),
-    representedPersonTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Представлен в лице']")),
     applicationCommonInfoTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Общие данные заявления']")),
     contractsTab = $(byXpath("//li[@data-menu-id='rc-menu-uuid-43754-4-contracts']")),
     methodsTab = $(byXpath("//span[@class='ant-menu-title-content' and text()='Иные способы обеспечения']")),
     notificationMessage = $(".ant-notification-notice-message"),
     header = $(byXpath("//span[text()='Заявление на регистрацию обеспечения']")),
-    declarantFlagPayerMatch = $(byXpath("//span[text()='Признак совпадения с Плательщиком']")),
-    fillDeclarantLikePayerConfirm = $(byXpath("//div[text()='Вы хотите скопировать данные из Плательщика?']/parent::div/parent::div/following-sibling::div/button/span[text()='Да']")),
-    saveDeclarantTabButton = $(byXpath("//button/span[text()='Сохранить']")),
-    phoneOfRepresentedPerson = $("#contacts_1_communicationIdentifier"),
-    checkDocumentInGBDFLButton = $(byXpath("//span[text()='Проверить документ в ГБД ФЛ']")),
-    documentFromGBDFLInfo = $(byXpath("//div[@class='df ai-c fw-w']")),
-    saveRepresentedPersonTabButton = $(byXpath("//button[@type='submit']//span[text()='Сохранить']")),
-    guarantyTypeField = $("#guaranty_guarantyType"),
-    enforcementOfDutyOption = $(byXpath("//div[@class='ant-select-item-option-content' and text()='Обеспечение исполнения обязанности']")),
-    guarantyRequiredSum = $("#guarantyInfo_requiredSum"),
-    guarantyCaseField = $("#guaranty_guarantyCase"),
-    customsTransitOption = $(byXpath("//div[@title = 'Таможенный транзит']")),
-    customsRegistrationAuthority = $("#guaranty_customs"),
-    zhetysuAuthority = $(byXpath("//div[@title = '55301 ТАМОЖЕННЫЙ ПОСТ «ЖЕТЫСУ»']")),
-    departureCustomsField = $("#guaranty_departureCustoms"),
-    zhetysuAuthorityRegistration = $(byXpath("//div[@title = '39855301 ТАМОЖЕННЫЙ ПОСТ «ЖЕТЫСУ»']")),
-    gurantyDestinationCustomsField=$("#guaranty_destinationCustoms"),
-    saintPetersburgCustomPost = $(byXpath("//div[@title = '12402000 ЭКС ЦЭКТУ г. Санкт-Петербург']")),
-    addCountryButton = $(byXpath("//button/span[text()='Добавить страну']")),
-    departureCountryField = $("#departureCountry"),
-    addRussiaOption = $(byXpath("//div[@title = 'RU Российская Федерация']")),
-    addDocumentOfApplicationInfoButton = $(byXpath("//button/span[text()='Добавить документ']")),
-    documentTypeField = $("#documentType"),
-    copyNameOfDocumentCheckBox = $(byXpath("//span[text()='Скопировать с графы \"Вид документа\"']")),
-    docNumberField = $("#docNumber"),
-    docDateField = $("#docDate"),
-    saveDocumentButton = $(byXpath("//div[@class='ant-space-item']/button/span[text()='Сохранить']")),
-    saveApplicationCommonInfoTab = $(byXpath("//div[@id='applicationCommonInfo']/main/button")),
-    createPaymentMethodButton = $(byXpath("//h5/following-sibling::button")),
-    moneyPaymentMethodOption = $(byXpath("//li[@role='menuitem']/span[text()='Деньгами']")),
-    moneyPaymentOptionType = $("#paymentOptionType"),
-    moneyDepositDocNumberField = $("#moneyDeposit_docNumber"),
-    moneyDepositDocDateField= $("#moneyDeposit_docDate"),
-    moneyDepositBikField = $("#moneyDeposit_bik"),
-    moneyDepositIikField = $("#moneyDeposit_iik"),
-    nonSuretyContractOption = $(byXpath("//span[@class='ant-radio ant-wave-target']/following-sibling::span[text()='Нет']")),
-    suretyContractOption = $(byXpath("//span[@class='ant-radio ant-wave-target']/following-sibling::span[text()='Да']")),
-    sumOfPaymentMethod = $("#sum"),
-    startDateOfPaymentMethod = $(byXpath("//article[text()='Действует с']/parent::label/parent::div/following-sibling::div")),
-    endDateOfPaymentMethod = $(byXpath("//article[text()='Действует по']/parent::label/parent::div/following-sibling::div")),
-    addPaymentMethodButton = $(byXpath("//button/span[text()='Добавить']")),
     refusalReasonsButton = $(byXpath("//div[@class='ant-space-item']/button/span[text()='Причины отказа']")),
     checkApplicationButton = $(byXpath("//div[@class='ant-space-item']/button/span[text()='Проверить данные']")),
     checkApplicationResultButton = $(byXpath("//div[@class='ant-space-item']/button/span[text()='Результат проверок']")),
@@ -96,86 +50,14 @@ public class GuarantyApplication {
         header.shouldBe(visible);
         return this;
     }
-
     public GuarantyApplication fillAll(){
         payer.fillByAccount();
-        fillDeclarant();
-        fillRepresentedPerson();
-        fillApplicationCommonInfo();
-        fillMoneyDepositPaymentMethod();
+        declarant.fillDeclarnatByPayer();
+        representedPerson.fillRepresentedPersonTab();
+        guarantyApplicationCommonInfoSection.fillApplicationCommonInfoTabToRussia();
+        guarantyPaymentMethodsSection.fillMoneyPaymentMethod();
         return this;
     }
-
-
-
-    public GuarantyApplication fillDeclarant(){
-        declarantTab.shouldBe(visible).click();
-        declarantFlagPayerMatch.shouldBe(visible).click();
-        fillDeclarantLikePayerConfirm.click();
-        saveDeclarantTabButton.click();
-        return this;
-    }
-
-    public GuarantyApplication fillRepresentedPerson(){
-        representedPersonTab.click();
-        phoneOfRepresentedPerson.sendKeys("+77088780570");
-        checkDocumentInGBDFLButton.click();
-        documentFromGBDFLInfo.shouldBe(visible);
-        saveRepresentedPersonTabButton.click();
-        return this;
-    }
-
-    public GuarantyApplication fillApplicationCommonInfo(){
-        applicationCommonInfoTab.click();
-        guarantyTypeField.click();
-        enforcementOfDutyOption.shouldBe(visible).click();
-        guarantyRequiredSum.setValue("50000");
-        guarantyCaseField.click();
-        customsTransitOption.click();
-        customsRegistrationAuthority.setValue("55301");
-        zhetysuAuthority.click();
-        departureCustomsField.setValue("55301");
-        zhetysuAuthorityRegistration.click();
-        gurantyDestinationCustomsField.setValue("1240200");
-        saintPetersburgCustomPost.click();
-        addCountryButton.click();
-        departureCountryField.setValue("RU");
-        addRussiaOption.shouldBe(visible).click();
-        addDocumentOfApplicationInfoButton.click();
-        documentTypeField.click();
-        documentTypeField.sendKeys(Keys.ENTER);
-        copyNameOfDocumentCheckBox.click();
-        docNumberField.setValue("Номер документа");
-        docDateField.click();
-        calendarComponent.setDate("16","07","2025");
-        documentUploader.upload("doc.jpg");
-        saveDocumentButton.click();
-        saveApplicationCommonInfoTab.scrollIntoView(true).click();
-        return this;
-    }
-
-    public GuarantyApplication fillMoneyDepositPaymentMethod(){
-        methodsTab.click();
-        createPaymentMethodButton.click();
-        moneyPaymentMethodOption.click();
-        moneyPaymentOptionType.click();
-        moneyPaymentOptionType.sendKeys(Keys.ENTER);
-        moneyDepositDocNumberField.setValue("2314");
-        moneyDepositDocDateField.click();
-        calendarComponent.setDate("16","06","2025");
-        moneyDepositBikField.setValue("87654321");
-        moneyDepositIikField.setValue("12345678900987654321");
-        nonSuretyContractOption.click();
-        sumOfPaymentMethod.setValue("50000");
-        startDateOfPaymentMethod.click();
-        calendarComponent.setDate("16","07","2025");
-        endDateOfPaymentMethod.click();
-        calendarComponent.setDate("16","12","2025");
-        documentUploader.upload("doc.jpg");
-        addPaymentMethodButton.click();
-        return this;
-    }
-
     public GuarantyApplication checkSignSend(){
         checkApplicationButton.scrollIntoView(true).click();
         checkApplicationResultButton.click();
@@ -186,5 +68,4 @@ public class GuarantyApplication {
         continueToSignButton.click();
         return this;
     }
-
 }
