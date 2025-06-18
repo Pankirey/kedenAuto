@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.open;
 
-public class MainPageAuthorizedTest {
+public class MainPageAuthorizedTest extends TestBase {
 
     AuthService auth = new AuthService();
 

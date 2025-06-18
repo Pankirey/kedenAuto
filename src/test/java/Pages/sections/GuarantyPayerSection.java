@@ -1,10 +1,12 @@
 package Pages.sections;
 
+import Utils.RandomUtils;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
+import static Utils.RandomUtils.*;
 
 public class GuarantyPayerSection {
     private final SelenideElement payerFillButton = $(byXpath("//button[@class='ant-btn css-gjh7v8 ant-btn-primary ant-btn-background-ghost']")),
@@ -25,6 +27,10 @@ public class GuarantyPayerSection {
             phoneField = $("#contacts_1_communicationIdentifier"),
             savePayerButton = $(byXpath("//div[text()='Добавить контрагента']/parent::div/following-sibling::div[@class='ant-modal-footer']//button[@form='addressForm']")),
             savePayerTabButton = $(byXpath("//button/span[text()='Сохранить']"));
+
+    String phoneNumber = getRandomPhoneNumber();
+
+
     public void fillByAccount(){
         payerFillButton.shouldBe(visible).click();
         fillPayerFromAccount.shouldBe(visible).click();
@@ -42,7 +48,7 @@ public class GuarantyPayerSection {
         addContactButton.click();
         typeOfContactForPhone.shouldBe(visible).click();
         phoneContactOption.shouldBe(visible).click();
-        phoneField.setValue("+77788482570");
+        phoneField.setValue(phoneNumber);
         savePayerButton.click();
         savePayerTabButton.click();
     }
