@@ -7,6 +7,7 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 public class TestBase {
     @BeforeAll
     static void setUp(){
+        System.setProperty("allure.results.directory", "target/allure-results");
         SelenideLogger.addListener("allure", new AllureSelenide()
                 .screenshots(true)
                 .savePageSource(true));
