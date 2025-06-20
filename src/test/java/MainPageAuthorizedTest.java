@@ -15,6 +15,5 @@ public class MainPageAuthorizedTest extends TestBase {
         open("https://test-keden.codecraft.kz/");
         MainPageAuthorized mainPageAuthorized = new MainPageAuthorized();
         mainPageAuthorized.goToSystem();
-
     }
 }

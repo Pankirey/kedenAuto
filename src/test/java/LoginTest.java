@@ -11,7 +11,5 @@ public class LoginTest extends TestBase{
                 setUsername("testkeden2@proton.me").
                 setPassword("Qwerty123$").
                 loginClick();
-
-
     }
 }

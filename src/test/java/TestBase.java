@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeAll;
 import io.qameta.allure.selenide.AllureSelenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 
+import static com.codeborne.selenide.Selenide.clearBrowserCookies;
+import static com.codeborne.selenide.Selenide.clearBrowserLocalStorage;
+
 public class TestBase {
     @BeforeAll
     static void setUp(){

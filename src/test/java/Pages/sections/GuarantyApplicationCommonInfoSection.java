@@ -8,9 +8,11 @@ import org.openqa.selenium.Keys;
 
 import java.time.LocalDate;
 
+import static com.codeborne.selenide.Condition.enabled;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byXpath;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.executeJavaScript;
 
 public class GuarantyApplicationCommonInfoSection {
     CalendarComponent calendarComponent = new CalendarComponent();
@@ -35,8 +37,9 @@ public class GuarantyApplicationCommonInfoSection {
     copyNameOfDocumentCheckBox = $(byXpath("//span[text()='Скопировать с графы \"Вид документа\"']")),
     docNumberField = $("#docNumber"),
     docDateField = $("#docDate"),
-    saveDocumentButton = $(byXpath("//div[@class='ant-space-item']/button/span[text()='Сохранить']")),
-    saveApplicationCommonInfoTab = $(byXpath("//div[@id='applicationCommonInfo']/main/button"));
+    saveDocumentButton = $(byXpath("//div[@class='ant-space-item']/button[.//span[text()='Сохранить']]")),
+    saveApplicationCommonInfoTab = $(byXpath("//div[@id='applicationCommonInfo']/main/button[.//span]")),
+    documentAddingBlock = $(byXpath("//div[@class='ant-modal-content']/div/div[text()='Добавление документа']"));
 
     public void openApplicationCommonInfoTab(){
         applicationCommonInfoTab.click();
@@ -65,7 +68,8 @@ public class GuarantyApplicationCommonInfoSection {
         docDateField.click();
         calendarComponent.setDate(LocalDate.of(2025,6,18));
         documentUploader.upload("doc.jpg");
-        saveDocumentButton.scrollIntoView(true).click();
-        saveApplicationCommonInfoTab.scrollIntoView(true).click();
+        saveDocumentButton.shouldBe(visible).click();
+        documentAddingBlock.shouldNotBe(visible);
+        executeJavaScript("arguments[0].click();", saveApplicationCommonInfoTab);
     }
 }

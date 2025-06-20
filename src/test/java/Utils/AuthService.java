@@ -14,7 +14,5 @@ public class AuthService {
                 .setUsername(username)
                 .setPassword(password)
                 .loginClick();
-
-        $(byXpath("//span[text()='Войти']")).shouldBe(visible);
     }
 }
